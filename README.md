@@ -41,14 +41,14 @@ t.Run("Expect correct result", Test(vf, subx.OrderGreater(0))
 t.Run("Expect correct result", Test(vf, subx.AllOf(
 	subx.OrderGreater(0),
 	subx.OrderLess(10),
-)
+)))
 
 // Invalid:
 t.Run("Expect correct result", Test(vf, subx.AllOf(
 	subx.OrderGreater(0),
 	subx.OrderLess(10),
 	subx.StringHasPrefix("F"), // Compiler error; trying to use a CheckFunc[string].
-)
+)))
 ```
 
 ```go
@@ -61,14 +61,14 @@ t.Run("Expect correct result", Test(vf, subx.AllOf(
 	subx.OrderGreater("A"),
 	subx.OrderLess("Z"),
 	subx.StringHasPrefix("F"),
-)
+)))
 
 // Invalid:
 t.Run("Expect correct result", Test(vf, subx.AllOf(
 	subx.OrderGreater(0), // Compiler error; trying to use a CheckFunc[int].
 	subx.OrderLess('Z'),  // Compiler error; trying to use a CheckFunc[char].
 	subx.StringHasPrefix("F"),
-)
+)))
 ```
 
 
