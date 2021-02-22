@@ -8,26 +8,25 @@ library for unit tests?
 
 ## Fundamentals
 
-This library revolve around only three main concepts:
+This library revolve around three main concepts:
 
-1: A "check" or `CheckFunc`, is a function that gets passed a value initializer
-function and returns a _well formatted_ error if the returned value does not
+1: A "check" or `CheckFunc`, is a function that takes a value initializer
+function and returns a _well formatted_ error if the initialized value does not
 pass the check:
 
 ```go
 type CheckFunc[T any] func(func() T) error
 ```
 
-2: A "value initializer" or `func () T` is any function that return a single
-parameter of any type. The type`T` must match the type of the check it's being
-used with. A value initializer must also accept being called multiple times as
-it can be passed to multiple checks.
+2: A "value initializer" or `func () T`, is any function that return a single
+parameter. Because the same value function can be passed to multiple checks,
+it is expected to return a stable result.
 
-3: Finally, the generic `Test` function converts a value initializer and check
-of the same type into a regular Go test function that can be passed to a `t.Run`
-entry. Note that thanks to the generic design's _type constraints_, this is a
-type-safe operation. Thanks to the _type inference_ system, the code is still
-easy to read.
+3: Finally, the generic `Test[T]` function converts a value initializer and a
+compatible check into a test function that can be passed to `t.Run`. Note that
+thanks to the generic design's _type constraints_, this is a type-safe
+operation. Thanks to the _type inference_ system, the code is still easy to
+read.
 
 Examples:
 
@@ -37,14 +36,14 @@ vf := func() int {
 }
 
 // Valid:
-t.Run("Expect correct result", Test(vf, subx.OrderGreater(0))
-t.Run("Expect correct result", Test(vf, subx.AllOf(
+t.Run("Expect correct result", subx.Test(vf, subx.OrderGreater(0))
+t.Run("Expect correct result", subx.Test(vf, subx.AllOf(
 	subx.OrderGreater(0),
 	subx.OrderLess(10),
 )))
 
 // Invalid:
-t.Run("Expect correct result", Test(vf, subx.AllOf(
+t.Run("Expect correct result", subx.Test(vf, subx.AllOf(
 	subx.OrderGreater(0),
 	subx.OrderLess(10),
 	subx.StringHasPrefix("F"), // Compiler error; trying to use a CheckFunc[string].
@@ -57,20 +56,19 @@ vf := func() string {
 }
 
 // Valid:
-t.Run("Expect correct result", Test(vf, subx.AllOf(
+t.Run("Expect correct result", subx.Test(vf, subx.AllOf(
 	subx.OrderGreater("A"),
 	subx.OrderLess("Z"),
 	subx.StringHasPrefix("F"),
 )))
 
 // Invalid:
-t.Run("Expect correct result", Test(vf, subx.AllOf(
+t.Run("Expect correct result", subx.Test(vf, subx.AllOf(
 	subx.OrderGreater(0), // Compiler error; trying to use a CheckFunc[int].
 	subx.OrderLess('Z'),  // Compiler error; trying to use a CheckFunc[char].
 	subx.StringHasPrefix("F"),
 )))
 ```
-
 
 ## Getting started
 
