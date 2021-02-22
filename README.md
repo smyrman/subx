@@ -18,9 +18,7 @@ To set-up the experimental Go generis tool, follow the instructions available
 Once the `go2go` tool is installed, we need a place for our code to live. While
 `GOPATH` in the Go world is being [deprecated][gopath-deprecated] in
 favour of go modules, to use the experimental generics tool, you actually do
-need to set up a `GOPATH`; or more accurately a `GO2PATH`.
-
-Setup `GO2PATH` and git clone `subx`.
+need to set up a `GOPATH`; or more accurately a `GO2PATH`:
 
 ```sh
 mkdir go2
