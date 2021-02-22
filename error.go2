@@ -1,0 +1,48 @@
+package subx
+
+import (
+	"fmt"
+	"bytes"
+)
+
+type cmpError struct{
+	suffix         string
+	result, expect interface{}
+}
+
+func Expect(result interface{}, rel string, expect interface{}) error {
+	return cmpError{
+		suffix: rel,
+		result: result,
+		expect: expect,
+	}
+}
+
+func (err cmpError) Error() string {
+	if err.expect == nil {
+		return fmt.Sprintf("comparison failed:\ngot: %s\nexpect %s.",
+			formatType(err.result),
+			err.suffix,
+		)
+	}
+	return fmt.Sprintf("comparison failed:\ngot: %s\nexpect %s: %s",
+		formatType(err.result),
+		err.suffix,
+		formatType(err.expect),
+	)
+}
+
+// Errors indents and combine the output of multiple errors on separate lines.
+type Errors []error
+
+func (errs Errors) Error() string {
+	var buf bytes.Buffer
+	for i, err := range errs {
+		if err == nil {
+			fmt.Fprintf(&buf, "[%d]: (nil)\n", i)
+		} else {
+			fmt.Fprintf(&buf, "[%d]: %T\n%s\n", i, err, indentString(err.Error()))
+		}
+	}
+	return buf.String()
+}

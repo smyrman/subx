@@ -1,0 +1,31 @@
+package main
+
+import (
+	"testing"
+
+	"github.com/smyrman/subx"
+)
+
+func TestSum(t *testing.T) {
+	t.Run("[int](2,2,1)", func(t *testing.T) {
+		// Composite syntax can be used to combine multiple checks in one
+		// sub-test.
+		vf := func() int {
+			return Sum[int](2, 2, 1)
+		}
+		t.Run("Expect correct and positive result", subx.Test(vf,
+		 	subx.AllOf(
+				 subx.CompareEqual(5),
+				 subx.OrderGreaterOrEqual(0),
+			),
+		))
+	})
+	t.Run("[float64](2,-3)", func(t *testing.T) {
+		// Individual checks.
+
+		// Short-hand syntax is available when using a named value initializer.
+		vf := subx.Numeric(Sum[float64](2, -3))
+		t.Run("Expect correct result", vf.Equal(-1))
+		t.Run("Expect negative result", vf.LessOrEqual(0))
+	})
+}
