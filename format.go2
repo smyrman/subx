@@ -34,8 +34,11 @@ func formatType(v interface{}) string {
 	case error:
 		return fmt.Sprintf("(%T)\n%s", v, indentString(vt.Error()))
 	}
-
-	return fmt.Sprintf("(%T)\n%s", v, indentString(FormatType(v)))
+	tf := FormatType(v)
+	if strings.ContainsAny(tf, "\n\r\t\b") {
+		return fmt.Sprintf("(%T)\n%s", v, indentString(tf))
+	}
+	return fmt.Sprintf("(%T) %s", v, tf)
 }
 
 // FormatType formats a type using the configured type formatter for the
@@ -83,4 +86,9 @@ func quoteString(s string) string {
 func indentString(s string) string {
 	sIndent := fmtCfg.indent
 	return sIndent + strings.ReplaceAll(s, "\n", "\n"+sIndent)
+}
+
+func indentStringExcludeFirstLine(s string) string {
+	sIndent := fmtCfg.indent
+	return strings.ReplaceAll(s, "\n", "\n"+sIndent)
 }

@@ -8,11 +8,11 @@ import (
 
 func TestSum(t *testing.T) {
 	t.Run("[int](2,2,1)", func(t *testing.T) {
-		// Composite syntax can be used to combine multiple checks in one
+		// subx.Value runs the Sum function only once.
+		vf := subx.Value(Sum[int](2, 2, 1))
+
+		// The composite syntax can be used to combine multiple checks in one
 		// sub-test.
-		vf := func() int {
-			return Sum[int](2, 2, 1)
-		}
 		t.Run("Expect correct and positive result", subx.Test(vf,
 		 	subx.AllOf(
 				 subx.CompareEqual(5),
@@ -21,10 +21,11 @@ func TestSum(t *testing.T) {
 		))
 	})
 	t.Run("[float64](2,-3)", func(t *testing.T) {
-		// Individual checks.
-
-		// Short-hand syntax is available when using a named value initializer.
+		// subx.Numeric is equivalent to subx.Value, but provide short-hand
+		// methods for test declaration. The Sum function is run only once.
 		vf := subx.Numeric(Sum[float64](2, -3))
+
+		// Run checks as individual tests using the short-hand methods.
 		t.Run("Expect correct result", vf.Equal(-1))
 		t.Run("Expect negative result", vf.LessOrEqual(0))
 	})

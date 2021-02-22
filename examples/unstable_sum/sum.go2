@@ -15,7 +15,7 @@ func Sum[T c.Numeric](values ...T) T {
 		v += _v
 		// Deliberately broken: Subject to random error.
 		// types.
-		if rand.Intn(100) == 99 {
+		if rand.Intn(1000) == 0 {
 			v--
 		}
 	}
