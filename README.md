@@ -26,8 +26,8 @@ it can be passed to multiple checks.
 3: Finally, the generic `Test` function converts a value initializer and check
 of the same type into a regular Go test function that can be passed to a `t.Run`
 entry. Note that thanks to the generic design's _type constraints_, this is a
-type-safe operation. Thanks to the _type inference_ system, the syntax is still
-easy to rad.
+type-safe operation. Thanks to the _type inference_ system, the code is still
+easy to read.
 
 Examples:
 
