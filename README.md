@@ -73,7 +73,18 @@ t.Run("Expect correct result", subx.Test(vf, subx.AllOf(
 ## Getting started
 
 To set-up the experimental Go generis tool, follow the instructions available
-[here][go2go-setup].
+[here][go2go-setup]. At the time of writing, these instructions can be
+summarized to include the following steps:
+
+```sh
+cd ~
+git clone https://go.googlesource.com/go goroot2
+cd goroot2
+git checkout dev.go2go
+cd src
+./all.bash
+export PATH=$HOME/goroot2/bin:$PATH
+```
 
 [go2go-setup]: https://go.googlesource.com/go/+/refs/heads/dev.go2go/README.go2go.md
 
@@ -85,6 +96,7 @@ favour of go modules, to use the experimental generics tool, you actually do
 need to set up a `GOPATH`; or more accurately a `GO2PATH`:
 
 ```sh
+cd ~
 mkdir go2
 export GO2PATH="$HOME/go2"
 ```
