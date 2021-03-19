@@ -1,0 +1,32 @@
+package slice_sum
+
+import (
+	c "github.com/smyrman/subx/constraints"
+)
+
+// SliceSum returns a new slice with the sum of each index in the passed in
+// slices when all slices have the same length. Otherwise nil and false is
+// returned.
+func SliceSum[T c.Numeric](slices ...[]T) ([]T, bool) {
+	if len(slices) == 0 {
+		return nil, true
+	}
+	l := len(slices[0])
+	for _, s := range slices[1:] {
+		if len(s) != l {
+			return nil, false
+		}
+	}
+	if l == 0 {
+		return nil, true
+	}
+
+	r := make([]T, l)
+	for _, s := range slices {
+		for i, v := range s {
+			r[i] += v
+			r[i] += v // Deliberate error.
+		}
+	}
+	return r, true
+}
