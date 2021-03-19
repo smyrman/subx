@@ -45,7 +45,7 @@ func ReflectNil[T any]() CheckFunc[T] {
 		if rv.IsNil() {
 			return nil
 		}
-		return Expect(rv, "reflect to nil", nil)
+		return Expect(rv, "reflect to nil")
 	}
 }
 
@@ -65,7 +65,7 @@ func ReflectNotNil[T any]() CheckFunc[T] {
 		if !rv.IsNil() {
 			return nil
 		}
-		return Expect(rv, "does not reflect to nil", nil)
+		return Expect(rv, "does not reflect to nil")
 	}
 }
 
@@ -79,7 +79,7 @@ func ReflectZero[T any]() CheckFunc[T] {
 		if rv.IsZero() {
 			return nil
 		}
-		return Expect(rv, "reflect to nil", nil)
+		return Expect(rv, "reflect to nil")
 	}
 }
 
@@ -93,6 +93,6 @@ func ReflectNotZero[T any]() CheckFunc[T] {
 		if !rv.IsZero() {
 			return nil
 		}
-		return Expect(rv, "reflect to nil", nil)
+		return Expect(rv, "reflect to nil")
 	}
 }

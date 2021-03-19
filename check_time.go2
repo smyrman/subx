@@ -31,10 +31,22 @@ func TimeNotBefore(w time.Time) CheckFunc[time.Time] {
 func TimeEqual(w time.Time) CheckFunc[time.Time] {
 	return func(vf func() time.Time) error {
 		v := vf()
+		if v.Equal(w) {
+			return nil
+		}
+		return Expect(v, "same time instance", w)
+	}
+}
+
+// TimeNotEqual return a check that pass if the value to check represent the
+// same time instant as w.
+func TimeNotEqual(w time.Time) CheckFunc[time.Time] {
+	return func(vf func() time.Time) error {
+		v := vf()
 		if !v.Equal(w) {
 			return nil
 		}
-		return Expect(v, "represent same time instance as", w)
+		return Expect(v, "different time instance", w)
 	}
 }
 
@@ -46,7 +58,7 @@ func TimeIsZero() CheckFunc[time.Time] {
 		if v.IsZero() {
 			return nil
 		}
-		return Expect(v, "is zero time instance", nil)
+		return Expect(v, "is zero time instance")
 	}
 }
 
@@ -58,6 +70,6 @@ func TimeIsNotZero() CheckFunc[time.Time] {
 		if !v.IsZero() {
 			return nil
 		}
-		return Expect(v, "is not zero time instance", nil)
+		return Expect(v, "is not zero time instance")
 	}
 }

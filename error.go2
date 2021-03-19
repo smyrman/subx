@@ -6,11 +6,13 @@ import (
 )
 
 type cmpError struct{
-	suffix         string
-	result, expect interface{}
+	suffix string
+	result interface{}
+	expect []interface{}
 }
 
-func Expect(result interface{}, rel string, expect interface{}) error {
+// Expect returns an error for when a comparison fails.
+func Expect(result interface{}, rel string, expect ...interface{}) error {
 	return cmpError{
 		suffix: rel,
 		result: result,
@@ -19,17 +21,25 @@ func Expect(result interface{}, rel string, expect interface{}) error {
 }
 
 func (err cmpError) Error() string {
-	if err.expect == nil {
+	switch len(err.expect) {
+	case 0:
 		return fmt.Sprintf("comparison failed:\ngot: %s\nexpect %s.",
 			formatType(err.result),
 			err.suffix,
 		)
+	case 1:
+		return fmt.Sprintf("comparison failed:\ngot: %s\nexpect %s: %s",
+			formatType(err.result),
+			err.suffix,
+			formatType(err.expect[0]),
+		)
+	default:
+		return fmt.Sprintf("comparison failed:\ngot: %s\nexpect %s: %s",
+			formatType(err.result),
+			err.suffix,
+			formatType(err.expect),
+		)
 	}
-	return fmt.Sprintf("comparison failed:\ngot: %s\nexpect %s: %s",
-		formatType(err.result),
-		err.suffix,
-		formatType(err.expect),
-	)
 }
 
 // Errors indents and combine the output of multiple errors on separate lines.

@@ -37,6 +37,11 @@ func (vf TimeFunc) Equal(w time.Time) func(*testing.T) {
 	return Test[time.Time](vf, TimeEqual(w))
 }
 
+// NotEqual is a short-hand for Test(vf, TimeNotEqual(w)).
+func (vf TimeFunc) NotEqual(w time.Time) func(*testing.T) {
+	return Test[time.Time](vf, TimeNotEqual(w))
+}
+
 // IsZero is a short-hand for Test(vf, TimeIsZero()).
 func (vf TimeFunc) IsZero() func(*testing.T) {
 	return Test[time.Time](vf, TimeIsZero())
@@ -44,7 +49,7 @@ func (vf TimeFunc) IsZero() func(*testing.T) {
 
 // IsNotZero is a short-hand for Test(vf, TimeIsNotZero()).
 func (vf TimeFunc) IsNotZero() func(*testing.T) {
-	return Test[time.Time](vf, TimeIsZero())
+	return Test[time.Time](vf, TimeIsNotZero())
 }
 
 // NumericFunc describe a numeric value initializer with namespaced short-hand
