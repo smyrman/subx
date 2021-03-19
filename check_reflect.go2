@@ -7,7 +7,7 @@ import (
 
 // DeepEqual returns a check function that pass when the value to check is deep
 // equal to w.
-func DeepEqual[T any](w interface{}) CheckFunc[T] {
+func DeepEqual[T any](w T) CheckFunc[T] {
 	return func(vf func() T) error {
 		v := vf()
 		if reflect.DeepEqual(v, w) {
@@ -19,7 +19,7 @@ func DeepEqual[T any](w interface{}) CheckFunc[T] {
 
 // NotDeepEqual returns a check function that pass when the value to check is
 // not deep equal to w.
-func NotDeepEqual[T any](w interface{}) CheckFunc[T] {
+func NotDeepEqual[T any](w T) CheckFunc[T] {
 	return func(vf func() T) error {
 		v := vf()
 		if !reflect.DeepEqual(v, w) {
