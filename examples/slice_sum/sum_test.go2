@@ -9,7 +9,7 @@ import (
 func TestSum(t *testing.T) {
 	t.Run("2x3", func(t *testing.T) {
 		r, err := SliceSum([]int{2, 2}, []int{5, 1}, []int{0, 0})
-		t.Run("Expect no error", subx.Test(subx.Value(err), subx.CompareEqual(true)))
+		t.Run("Expect no error", subx.Test(subx.Value(err), subx.CompareEqual[error](nil)))
 		t.Run("Expect correft result", subx.Test(subx.Value(r), subx.DeepEqual([]int{7, 3})))
 	})
 }
