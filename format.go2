@@ -34,11 +34,9 @@ func formatType(v interface{}) string {
 	case error:
 		return fmt.Sprintf("(%T)\n%s", v, indentString(vt.Error()))
 	}
+
 	tf := FormatType(v)
-	if strings.ContainsAny(tf, "\n\r\t\b") {
-		return fmt.Sprintf("(%T)\n%s", v, indentString(tf))
-	}
-	return fmt.Sprintf("(%T) %s", v, tf)
+	return fmt.Sprintf("(%T)\n%s", v, indentString(tf))
 }
 
 // FormatType formats a type using the configured type formatter for the

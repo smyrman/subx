@@ -124,16 +124,20 @@ $ go tool go2go test
         --- FAIL: TestSum/[int](2,2,1)/Expect_correct_and_positive_result (0.00s)
             sum_test.go2:16: 1/2 checks failed, want all checks to pass;
                 [0]: comparison failed:
-                    got: (int) 0
-                    expect equal to: (int) 5
+                    got: (int)
+                        0
+                    want equal to: (int)
+                        5
     --- FAIL: TestSum/[float64](2,-3) (0.00s)
         --- FAIL: TestSum/[float64](2,-3)/Expect_correct_result (0.00s)
             sum_test.go2:29: comparison failed:
-                got: (float64) 0
-                expect equal to: (float64) -1
+                got: (float64)
+                    0
+                want equal to: (float64)
+                    -1
 FAIL
 exit status 1
-FAIL	github.com/smyrman/subx/examples/incorrect_sum	0.290s
+FAIL	github.com/smyrman/subx/examples/incorrect_sum	0.358s
 ```
 
 **PS!** Note that at the time of writing, you can not specify a _path_ like you
