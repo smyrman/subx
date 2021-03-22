@@ -1,32 +1,20 @@
 # SubX
 
-The `subx` package provide a test matcher library written with the go generics
-experimental tools. As Go generics isn't yet included in the Go language,
-naturally this code is unsuitable for production. However, if you want to try
-out Go generics, why not conduct your experiments using a Go generics enabled
-library for unit tests?
+The `subx` package provide a test matcher library written with the go generics experimental tools. As Go generics isn't yet included in the Go language, naturally this code is unsuitable for production. However, if you want to try out Go generics, why not conduct your experiments using a Go generics enabled library for unit tests?
 
 ## Fundamentals
 
 This library revolve around three main concepts:
 
-1: A "check" or `CheckFunc`, is a function that takes a value initializer
-function and returns a _well formatted_ error if the initialized value does not
-pass the check:
+1: A "check" or `CheckFunc`, is a function that takes a value initializer function and returns a _well formatted_ error if the initialized value does not pass the check:
 
 ```go
 type CheckFunc[T any] func(func() T) error
 ```
 
-2: A "value initializer" or `func () T`, is any function that return a single
-parameter. Because the same value function can be passed to multiple checks,
-it is expected to return a stable result.
+2: A "value initializer" or `func () T`, is any function that return a single parameter. Because the same value function can be passed to multiple checks, it is expected to return a stable result.
 
-3: Finally, the generic `Test[T]` function converts a value initializer and a
-compatible check into a test function that can be passed to `t.Run`. Note that
-thanks to the generic design's _type constraints_, this is a type-safe
-operation. Thanks to the _type inference_ system, the code is still easy to
-read.
+3: Finally, the generic `Test[T]` function converts a value initializer and a compatible check into a test function that can be passed to `t.Run`. Note that thanks to the generic design's _type constraints_, this is a type-safe operation. Thanks to the _type inference_ system, the code is still easy to read.
 
 Examples:
 
@@ -72,9 +60,7 @@ t.Run("Expect correct result", subx.Test(vf, subx.AllOf(
 
 ## Getting started
 
-To set-up the experimental Go generis tool, follow the instructions available
-[here][go2go-setup]. At the time of writing, these instructions can be
-summarized to include the following steps:
+To set-up the experimental Go generis tool, follow the instructions available [here][go2go-setup]. At the time of writing, these instructions can be summarized to include the following steps:
 
 ```sh
 cd ~
@@ -90,10 +76,7 @@ export PATH=$HOME/goroot2/bin:$PATH
 
 ### Setup a GO2PATH
 
-Once the `go2go` tool is installed, we need a place for our code to live. While
-`GOPATH` in the Go world is being [deprecated][gopath-deprecated] in
-favour of go modules, to use the experimental generics tool, you actually do
-need to set up a `GOPATH`; or more accurately a `GO2PATH`:
+Once the `go2go` tool is installed, we need a place for our code to live. While `GOPATH` in the Go world is being [deprecated][gopath-deprecated] in favour of go modules, to use the experimental generics tool, you actually do need to set up a `GOPATH`; or more accurately a `GO2PATH`:
 
 ```sh
 cd ~
@@ -113,8 +96,7 @@ cd  ~/go2/src/github.com/smyrman
 git clone git@github.com:smyrman/subx
 ```
 
-To test that everything is working, you can now try to run one of the example
-tests:
+To test that everything is working, you can now try to run one of the example tests:
 
 ```sh
 $ cd  ~/go2/src/github.com/smyrman/subx/examples/incorrect_sum
@@ -140,9 +122,7 @@ exit status 1
 FAIL	github.com/smyrman/subx/examples/incorrect_sum	0.358s
 ```
 
-**PS!** Note that at the time of writing, you can not specify a _path_ like you
-can for `go test` when using the `go2go` tool. This will just result in an
-error:
+**PS!** Note that at the time of writing, you can not specify a _path_ like you can for `go test` when using the `go2go` tool. This will just result in an error:
 
 ```sh
 $ cd  ~/go2/src/github.com/smyrman
@@ -159,8 +139,7 @@ mkdir -p "~/go2/src/<import path>"
 cd  "~/go2/src/<import path>"
 ```
 
-Create your own code using the `.go2` extension. You should now be able to
-import subx as long as it's in your GO2PATH.
+Create your own code using the `.go2` extension. You should now be able to import subx as long as it's in your GO2PATH.
 
 Example:
 
@@ -227,5 +206,4 @@ func TestSum(t *testing.T) {
 }
 ```
 
-For more ideas of what to do next, read through the code to explore available
-checks.
+For more ideas of what to do next, read through the code to explore available checks.
