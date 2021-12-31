@@ -42,13 +42,10 @@ func formatType(v interface{}) string {
 // FormatType formats a type using the configured type formatter for the
 // package.
 func FormatType(v interface{}) string {
-	var f func(...interface{}) string
-	f = fmtCfg.f
-
+	f := fmtCfg.f
 	if f == nil {
 		return defaultTypeFormatter(v)
 	}
-
 	return f(v)
 }
 

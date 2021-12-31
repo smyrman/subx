@@ -1,15 +1,18 @@
 package main
 
 import (
+	"constraints"
 	"fmt"
 	"math/rand"
 
 	"github.com/smyrman/subx"
-	c "github.com/smyrman/subx/constraints"
 )
 
+type Number interface {
+	constraints.Integer | constraints.Float | constraints.Complex
+}
 
-func Sum[T c.Numeric](values ...T) T {
+func Sum[T Number](values ...T) T {
 	var v T
 	for _, _v := range values {
 		v += _v
@@ -25,7 +28,7 @@ func Sum[T c.Numeric](values ...T) T {
 func main() {
 	// Checks can be run outside of tests.
 	{
-		vf := func() int{
+		vf := func() int {
 			return Sum[int](5, 1, 2)
 		}
 		cf := subx.CompareEqual[int](8)
@@ -33,7 +36,7 @@ func main() {
 		fmt.Println("CHECK Sum[int](5,1,2):", cf(vf))
 	}
 	{
-		vf := func() float64{
+		vf := func() float64 {
 			return Sum[float64](5, 1, 2)
 		}
 		cf := subx.CompareEqual[float64](8)

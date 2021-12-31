@@ -1,8 +1,6 @@
 package subx
 
-import (
-	c "github.com/smyrman/subx/constraints"
-)
+import c "constraints"
 
 func OrderGreaterOrEqual[T c.Ordered](w T) CheckFunc[T] {
 	return func(vf func() T) error {

@@ -1,14 +1,17 @@
 package slice_sum
 
 import (
+	"constraints"
 	"errors"
-
-	c "github.com/smyrman/subx/constraints"
 )
+
+type Number interface {
+	constraints.Integer | constraints.Float | constraints.Complex
+}
 
 // SliceSum returns a new slice with the sum of each index in the passed in
 // slices when all slices have the same length. Otherwise an error is return.
-func SliceSum[T c.Numeric](slices ...[]T) ([]T, error) {
+func SliceSum[T Number](slices ...[]T) ([]T, error) {
 	if len(slices) == 0 {
 		return nil, nil
 	}

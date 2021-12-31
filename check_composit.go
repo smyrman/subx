@@ -4,21 +4,21 @@ import (
 	"fmt"
 )
 
-
 // AnyOf is a short-and for NOf(1, checks...). This means that if len(checks) is
 // 0, then the returned check will always fail.
 func AnyOf[T any](checks ...CheckFunc[T]) CheckFunc[T] {
-	return NOf[T](1, checks...)
+	return AtLeastNOf(1, checks...)
 }
 
 // AllOf is a short-and for NOf(len(checks), checks...). This means that if
 // len(checks) is 0, then the returned check will always pass.
 func AllOf[T any](checks ...CheckFunc[T]) CheckFunc[T] {
-	return NOf[T](len(checks), checks...)
+	return AtLeastNOf(len(checks), checks...)
 }
 
-// NOf return a check that passes if at least N of the provided checks pass.
-func NOf[T any](n int, checks ...CheckFunc[T]) CheckFunc[T] {
+// AtLeastNOf return a check that passes if at least N of the provided checks
+// pass.
+func AtLeastNOf[T any](n int, checks ...CheckFunc[T]) CheckFunc[T] {
 	// Compose best error message prefix based on n and number of checks.
 	var want string
 	switch n {
@@ -32,7 +32,7 @@ func NOf[T any](n int, checks ...CheckFunc[T]) CheckFunc[T] {
 		}
 		want = "all checks to pass"
 	default:
-	  want = fmt.Sprintf("at least %d/%d checks to pass", n, len(checks))
+		want = fmt.Sprintf("at least %d/%d checks to pass", n, len(checks))
 	}
 
 	return func(vf func() T) error {

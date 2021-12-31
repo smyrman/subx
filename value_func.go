@@ -1,13 +1,12 @@
 package subx
 
 import (
+	"regexp"
 	"testing"
 	"time"
-	"regexp"
 
-	c "github.com/smyrman/subx/constraints"
+	c "constraints"
 )
-
 
 // TimeFunc describe a time value initializer with namespaced short-hand methods
 // for direct test definitions.
@@ -24,77 +23,76 @@ func Time(v time.Time) TimeFunc {
 
 // Before is a short-hand for Test(vf, TimeBefore(w)).
 func (vf TimeFunc) Before(w time.Time) func(*testing.T) {
-	return Test[time.Time](vf, TimeBefore(w))
+	return Test(vf, TimeBefore(w))
 }
 
 // NotBefore is a short-hand for Test(vf, TimeNotBefore(w)).
 func (vf TimeFunc) NotBefore(w time.Time) func(*testing.T) {
-	return Test[time.Time](vf, TimeNotBefore(w))
+	return Test(vf, TimeNotBefore(w))
 }
 
 // Equal is a short-hand for Test(vf, TimeEqual(w)).
 func (vf TimeFunc) Equal(w time.Time) func(*testing.T) {
-	return Test[time.Time](vf, TimeEqual(w))
+	return Test(vf, TimeEqual(w))
 }
 
 // NotEqual is a short-hand for Test(vf, TimeNotEqual(w)).
 func (vf TimeFunc) NotEqual(w time.Time) func(*testing.T) {
-	return Test[time.Time](vf, TimeNotEqual(w))
+	return Test(vf, TimeNotEqual(w))
 }
 
 // IsZero is a short-hand for Test(vf, TimeIsZero()).
 func (vf TimeFunc) IsZero() func(*testing.T) {
-	return Test[time.Time](vf, TimeIsZero())
+	return Test(vf, TimeIsZero())
 }
 
 // IsNotZero is a short-hand for Test(vf, TimeIsNotZero()).
 func (vf TimeFunc) IsNotZero() func(*testing.T) {
-	return Test[time.Time](vf, TimeIsNotZero())
+	return Test(vf, TimeIsNotZero())
 }
 
-// NumericFunc describe a numeric value initializer with namespaced short-hand
+// OrderedFunc describe a ordered value initializer with namespaced short-hand
 // methods for direct test definitions.
-type NumericFunc[T c.Numeric] func() T
+type OrderedFunc[T c.Ordered] func() T
 
-// Numeric returns a NumericFunc that return v. The returned type is equivalent
+// Ordered returns a NumericFunc that return v. The returned type is equivalent
 // to that returned from Value(v), except it expose useful short-hand methods
 // for defining tests directly.
-func Numeric[T c.Numeric](v T) NumericFunc[T] {
+func Ordered[T c.Ordered](v T) OrderedFunc[T] {
 	return func() T {
 		return v
 	}
 }
 
 // Equal is a short-hand for Test(vf, CompareEqual(w)).
-func (vf NumericFunc[T]) Equal(w T) func(t *testing.T) {
+func (vf OrderedFunc[T]) Equal(w T) func(t *testing.T) {
 	return Test(vf, CompareEqual(w))
 }
 
 // NotEqual is a short-hand for Test(vf, CompareNotEqual(w)).
-func (vf NumericFunc[T]) NotEqual(w T) func(t *testing.T) {
+func (vf OrderedFunc[T]) NotEqual(w T) func(t *testing.T) {
 	return Test(vf, CompareNotEqual(w))
 }
 
 // GreaterOrEqual is a short-hand for Test(vf, OrderGreaterOrEqual(w)).
-func (vf NumericFunc[T]) GreaterOrEqual(w T) func(t *testing.T) {
+func (vf OrderedFunc[T]) GreaterOrEqual(w T) func(t *testing.T) {
 	return Test(vf, OrderGreaterOrEqual(w))
 }
 
 // Greater is a short-hand for Test(vf, OrderGreater(w)).
-func (vf NumericFunc[T]) Greater(w T) func(t *testing.T) {
+func (vf OrderedFunc[T]) Greater(w T) func(t *testing.T) {
 	return Test(vf, OrderGreater(w))
 }
 
 // LessOrEqual is a short-hand for Test(vf, OrderLessOrEqual(w)).
-func (vf NumericFunc[T]) LessOrEqual(w T) func(t *testing.T) {
+func (vf OrderedFunc[T]) LessOrEqual(w T) func(t *testing.T) {
 	return Test(vf, OrderLessOrEqual(w))
 }
 
 // Less is a short-hand for Test(vf, OrderLess(w)).
-func (vf NumericFunc[T]) Less(w T) func(t *testing.T) {
+func (vf OrderedFunc[T]) Less(w T) func(t *testing.T) {
 	return Test(vf, OrderLess(w))
 }
-
 
 // StringFunc describe a string value initializer with namespaced short-hand
 // methods for direct test definitions.
@@ -153,6 +151,7 @@ func (vf StringFunc) Contains(w string) func(t *testing.T) {
 func (vf StringFunc) ContainsAny(w string) func(t *testing.T) {
 	return Test(vf, StringContainsAny(w))
 }
+
 // EqualFold is a short-hand for Test(vf, StringEqualFold(w)).
 func (vf StringFunc) EqualFold(w string) func(t *testing.T) {
 	return Test(vf, StringEqualFold(w))

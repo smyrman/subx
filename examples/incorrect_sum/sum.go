@@ -1,13 +1,17 @@
 package main
 
 import (
+	"constraints"
 	"fmt"
 
 	"github.com/smyrman/subx"
-	c "github.com/smyrman/subx/constraints"
 )
 
-func Sum[T c.Numeric](values ...T) T {
+type Number interface {
+	constraints.Integer | constraints.Float | constraints.Complex
+}
+
+func Sum[T Number](values ...T) T {
 	// Deliberately broken implementation.
 	var v T
 	for v := range values {
@@ -19,14 +23,14 @@ func Sum[T c.Numeric](values ...T) T {
 func main() {
 	// Checks can be run outside of tests.
 	{
-		vf := func() int{
+		vf := func() int {
 			return Sum[int](5, 1, 2)
 		}
 		cf := subx.CompareEqual[int](8)
 		fmt.Println("CHECK Sum[int](5,1,2):", cf(vf))
 	}
 	{
-		vf := func() float64{
+		vf := func() float64 {
 			return Sum[float64](5, 1, 2)
 		}
 		cf := subx.CompareEqual[float64](8)

@@ -17,20 +17,20 @@ func TestSum(t *testing.T) {
 
 		// We can repeat the same check multiple times with composite syntax.
 		t.Run("Expect stabler results", subx.Test(vf,
-		 	subx.AllOf(subx.Repeat(1000, subx.CompareEqual[int](5))...),
+			subx.AllOf(subx.Repeat(1000, subx.CompareEqual[int](5))...),
 		))
 	})
 	t.Run("[float64](2,-3)", func(t *testing.T) {
 		// By converting our value initializer function to subx.NumericFunc, we
 		// get access to short-hand methods for test declaration.
-		vf := subx.NumericFunc[float64](func() float64 {
+		vf := subx.OrderedFunc[float64](func() float64 {
 			return Sum[float64](2, -3)
 		})
 
 		// To repeat a check multiple times with the short-hand syntax, we must
 		// run the check in a for-loop.
 		for i := 0; i < 1000; i++ {
-			t.Run(fmt.Sprintf("Run %d of 1000", i), func(t *testing.T){
+			t.Run(fmt.Sprintf("Run %d of 1000", i), func(t *testing.T) {
 				t.Run("Expect correct result", vf.Equal(-1))
 			})
 		}
