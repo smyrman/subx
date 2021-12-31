@@ -72,7 +72,7 @@ If you are using VS Code, you can configure it to use Go 1.18beta1 by running "G
 
 ### Git clone and test subx
 
-Next up, git clone `subx` into the into the folder of your choosing.
+Next up, git clone `subx` into the folder of your choosing.
 
 ```sh
 git clone git@github.com:smyrman/subx
@@ -81,8 +81,8 @@ git clone git@github.com:smyrman/subx
 To test that everything is working, you can now try to run one of the example tests:
 
 ```sh
-$ cd  subx/examples/incorrect_sum
-$ go tool go2go test
+$ cd subx/examples/incorrect_sum
+$ go1.18beta1 test
 --- FAIL: TestSum (0.00s)
     --- FAIL: TestSum/[int](2,2,1) (0.00s)
         --- FAIL: TestSum/[int](2,2,1)/Expect_correct_and_positive_result (0.00s)
