@@ -17,7 +17,7 @@ func CompareEqual[T comparable](w T) CheckFunc[T] {
 func CompareNotEqual[T comparable](w T) CheckFunc[T] {
 	return CheckFunc[T](func(vf func() T) error {
 		v := vf()
-		if v == w {
+		if v != w {
 			return nil
 		}
 		return Expect(v, "unequal to", w)
