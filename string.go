@@ -1,12 +1,12 @@
 package subx
 
 import (
-	"strings"
 	"regexp"
+	"strings"
 )
 
 func StringMatchRegexp(w *regexp.Regexp) CheckFunc[string] {
-	return func(vf func() string) error{
+	return func(vf func() string) error {
 		v := vf()
 		if w.MatchString(v) {
 			return nil
@@ -18,7 +18,7 @@ func StringMatchRegexp(w *regexp.Regexp) CheckFunc[string] {
 // StringContains return a check that pass if the value to test contains the
 // substring w.
 func StringContains(w string) CheckFunc[string] {
-	return func(vf func() string) error{
+	return func(vf func() string) error {
 		v := vf()
 		if strings.Contains(v, w) {
 			return nil
@@ -30,7 +30,7 @@ func StringContains(w string) CheckFunc[string] {
 // StringContainsAny return a check that pass if the value to test contains any
 // of the Unicode code points in w.
 func StringContainsAny(w string) CheckFunc[string] {
-	return func(vf func() string) error{
+	return func(vf func() string) error {
 		v := vf()
 		if strings.ContainsAny(v, w) {
 			return nil
@@ -42,7 +42,7 @@ func StringContainsAny(w string) CheckFunc[string] {
 // StringEqualFold return a check that pass if the value to test interpreted as
 // an UTF-8 string is equal to w under Unicode case-folding.
 func StringEqualFold(w string) CheckFunc[string] {
-	return func(vf func() string) error{
+	return func(vf func() string) error {
 		v := vf()
 		if strings.EqualFold(v, w) {
 			return nil
@@ -54,7 +54,7 @@ func StringEqualFold(w string) CheckFunc[string] {
 // StringHasPrefix return a check that pass if the value to test has the has the
 // prefix w.
 func StringHasPrefix(w string) CheckFunc[string] {
-	return func(vf func() string) error{
+	return func(vf func() string) error {
 		v := vf()
 		if strings.HasPrefix(v, w) {
 			return nil
@@ -66,7 +66,7 @@ func StringHasPrefix(w string) CheckFunc[string] {
 // StringHasSuffix return a check that pass if the value to test has the has the
 // suffix w.
 func StringHasSuffix(w string) CheckFunc[string] {
-	return func(vf func() string) error{
+	return func(vf func() string) error {
 		v := vf()
 		if strings.HasSuffix(v, w) {
 			return nil

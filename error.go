@@ -57,16 +57,14 @@ func (errs Errors) Error() string {
 	return buf.String()
 }
 
-
-
 // Accumulator allows accumulating errors.
-type Accumulator struct{
+type Accumulator struct {
 	prefix string
-	errs Errors
+	errs   Errors
 }
 
 // SetPrefix to use on all errors.
-func(acc *Accumulator) SetPrefix(prefix string) {
+func (acc *Accumulator) SetPrefix(prefix string) {
 	acc.prefix = prefix
 }
 

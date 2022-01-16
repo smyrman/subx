@@ -29,7 +29,6 @@ func NotDeepEqual[T any](w T) CheckFunc[T] {
 	}
 }
 
-
 // ReflectNil returns a check function that pass when the value to check is set
 // to a typed or untyped nil value. Unlike IsNil in the reflect package, the
 // check does not panic, but will error if the type can not hold a nil value.

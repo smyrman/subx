@@ -7,7 +7,7 @@ import (
 // Value return a value initializer that always return v. Only use if v is not
 // stateful or otherwise subject to check mutation.
 func Value[T any](v T) func() T {
-	return func() T{
+	return func() T {
 		return v
 	}
 }
@@ -29,4 +29,3 @@ func Test[T any](vf func() T, cf CheckFunc[T]) func(*testing.T) {
 		}
 	}
 }
-
